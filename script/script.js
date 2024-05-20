@@ -9,7 +9,13 @@ class Calculator {
 
     backspace(){}
 
-    insertNumber(value){}
+    insertNumber(value){
+        if(this.getLastInputType() === "number"){
+            this.appedToLastInput(value);
+        }else if(this.getLastInputType() === "operator"){
+            this.addNewInput(value, "number");
+        }
+    }
 
     insertOperation(){}
 
@@ -21,6 +27,42 @@ class Calculator {
         this.inputScreen = [];
         this.updateInputDisplay();
         this.updateOutputDisplay("0");
+    }
+
+
+    getLastInputValue(){
+        return (this.inputScreen.lenght === 0) ? null: this.inputScreen[this.inputScreen.lenght - 1].type;
+    }
+
+    getLastInputType(){
+        return (this.inputScreen.length === 0) ? null : this.inputScreen[this.inputScreen.length -1].type;
+    }
+
+
+    getAllInputValues(){
+        return this.inputScreen.map(entry => entry.value);
+
+    }
+
+    addNewInput(value, type) {
+        this.inputScreen.push({ value, type });
+    }
+
+    appendToLastInput(value) {
+        this.inputScreen[this.inputScreen.length - 1].value += value;
+    }
+
+    replaceLastInput(value, type) {
+        this.inputScreen[this.inputScreen.length - 1] = { value, type };
+}
+
+    updateInputDisplay(){
+        this.inputNumber.value = this.getAllInputValues().join("");
+    }
+
+    updateOutputDisplay(value){
+        this.outputDisplay.value = Number(value).toLocaleString();
+
     }
 }
 
