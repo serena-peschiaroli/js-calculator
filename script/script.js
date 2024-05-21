@@ -136,8 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
             case '*':
                 return leftOperand * rightOperand;
             case '/':
-                if (rightOperand === 0) throw new Error('Division by zero');
-                return leftOperand / rightOperand;
+                if (rightOperand === 0 || leftOperand === 0) throw new Error('Division by zero');
+                // limit to 2 decimal places for simplicity
+                const result = leftOperand / rightOperand;
+                return parseFloat(result.toFixed(2)); 
             case '+':
                 return leftOperand + rightOperand;
             case '-':
